@@ -40,8 +40,10 @@ def draw(alive):
         dot(10, 'red')
 
     for ball in balls:
-        goto(ball.x, ball.y)
-        dot(20, 'black')
+    	goto(ball.x, ball.y)
+    	dot(20, 'blue')
+        
+        
 
     update()
 
