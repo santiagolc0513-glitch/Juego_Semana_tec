@@ -1,16 +1,14 @@
 """Flappy, game inspired by Flappy Bird.
 
-Exercises
-
+Exercises:
 1. Keep score.
 2. Vary the speed.
 3. Vary the size of the balls.
 4. Allow the bird to move forward and back.
 """
 
-from random import *
-from turtle import *
-
+import random
+import turtle
 from freegames import vector
 
 bird = vector(0, 0)
@@ -19,8 +17,9 @@ balls = []
 
 def tap(x, y):
     """Move bird up in response to screen tap."""
-    up = vector(0, 30)
-    bird.move(up)
+    _ = (x, y)  # x,y unused; keep signature for onscreenclick
+    up_vec = vector(0, 30)
+    bird.move(up_vec)
 
 
 def inside(point):
@@ -30,22 +29,16 @@ def inside(point):
 
 def draw(alive):
     """Draw screen objects."""
-    clear()
+    turtle.clear()
 
-    goto(bird.x, bird.y)
-
-    if alive:
-        dot(10, 'green')
-    else:
-        dot(10, 'red')
+    turtle.goto(bird.x, bird.y)
+    turtle.dot(10, "green" if alive else "red")
 
     for ball in balls:
-    	goto(ball.x, ball.y)
-    	dot(20, 'blue')
-        
-        
+        turtle.goto(ball.x, ball.y)
+        turtle.dot(20, "blue") 
 
-    update()
+    turtle.update()
 
 
 def move():
@@ -55,12 +48,12 @@ def move():
     for ball in balls:
         ball.x -= 3
 
-    if randrange(10) == 0:
-        y = randrange(-199, 199)
-        ball = vector(199, y)
-        balls.append(ball)
+    if random.randrange(10) == 0:
+        y = random.randrange(-199, 199)
+        new_ball = vector(199, y)
+        balls.append(new_ball)
 
-    while len(balls) > 0 and not inside(balls[0]):
+    while balls and not inside(balls[0]):
         balls.pop(0)
 
     if not inside(bird):
@@ -73,13 +66,14 @@ def move():
             return
 
     draw(True)
-    ontimer(move, 50)
+    turtle.ontimer(move, 50)
 
 
-setup(420, 420, 370, 0)
-hideturtle()
-up()
-tracer(False)
-onscreenclick(tap)
+turtle.setup(420, 420, 370, 0)
+turtle.hideturtle()
+turtle.up()
+turtle.tracer(False)
+turtle.onscreenclick(tap)
 move()
-done()
+turtle.done()
+
